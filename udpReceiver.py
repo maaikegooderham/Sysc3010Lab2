@@ -13,9 +13,13 @@ while True:
 
     print ("Waiting to receive on port %d : press Ctrl-C or Ctrl-Break to stop " % port)
 
+    # receiving message 
     buf, address = s.recvfrom(port)
     if not len(buf):
         break
-    print ("Received %s bytes from %s %s: " % (len(buf), address, buf ))
+    # sending acknowledgement 
+    data = "ACK:" + buf.decode('utf-8')
+    print (data)
+    s.sendto(data.encode('utf-8'), address)
 
 s.shutdown(1)

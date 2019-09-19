@@ -23,11 +23,13 @@ public class UDPReceiver {
 
 	         for( ;; )
 	         {
-		        System.out.println( "Receiving on port " + port ) ;
-		        DatagramPacket packet = new DatagramPacket( new byte[PACKETSIZE], PACKETSIZE ) ;
+	        	System.out.println( "Receiving on port " + port ) ;
+	        	DatagramPacket packet = new DatagramPacket( new byte[PACKETSIZE], PACKETSIZE ) ;
 	            socket.receive( packet ) ;
 
 	            System.out.println( packet.getAddress() + " " + packet.getPort() + ": " + new String(packet.getData()).trim() ) ;
+				DatagramPacket sendPacket = new DatagramPacket(packet.getData(), packet.getLength(), packet.getAddress(), packet.getPort());
+				socket.send(sendPacket);
 	        }  
 	     }
 	     catch( Exception e )
